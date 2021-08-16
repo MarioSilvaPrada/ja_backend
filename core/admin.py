@@ -1,3 +1,9 @@
 from django.contrib import admin
+from core import models
 
-# Register your models here.
+
+class ProjectsAdmin(admin.ModelAdmin):
+    list_display = ['name']
+
+
+admin.site.register(models.Projects, ProjectsAdmin)
