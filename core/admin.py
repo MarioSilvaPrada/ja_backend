@@ -6,4 +6,4 @@ class ProjectsAdmin(admin.ModelAdmin):
     list_display = ['name']
 
 
-admin.site.register(models.Projects, ProjectsAdmin)
+admin.site.register(models.Project, ProjectsAdmin)

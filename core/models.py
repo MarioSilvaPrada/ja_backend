@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Projects(models.Model):
+class Project(models.Model):
 
     name = models.CharField(max_length=255)
     description = models.TextField()
