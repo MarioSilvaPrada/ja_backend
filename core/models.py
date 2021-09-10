@@ -17,7 +17,7 @@ def settings_image(instance, filename):
 
 class Settings(models.Model):
     class Meta:
-        verbose_name_plural = "Settings"
+        verbose_name_plural = "Definições"
 
     phone_regex = RegexValidator(
         regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in a valid format.")
@@ -41,6 +41,22 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class About(models.Model):
+    class Meta:
+        verbose_name_plural = "Sobre"
+
+    description = models.TextField(verbose_name='Descrição do negócio')
+    services = models.CharField(max_length=255, verbose_name='Serviços')
+
+class Partners(models.Model):
+    class Meta:
+        verbose_name_plural = "Parceiros"
+    
+    name = models.CharField(max_length=155, verbose_name='Nome da empresa')
+    url = models.URLField(max_length=155, verbose_name='Site da empresa', blank=True)
+
 
 
 def _delete_file(path):

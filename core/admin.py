@@ -7,4 +7,6 @@ class ProjectsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Project, ProjectsAdmin)
+admin.site.register(models.Partners)
+admin.site.register(models.About)
 admin.site.register(models.Settings)
