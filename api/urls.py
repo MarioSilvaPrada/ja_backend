@@ -19,8 +19,14 @@ from django.conf.urls.static import static
 from django.conf import settings 
 
 from settings.views import SettingsAPIView
+from projects.views import ProjectAPIView
+from about.views import AboutAPIView
+from partners.views import PartnersAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('settings/', SettingsAPIView.as_view(), name='settings'),
+    path('projects/', ProjectAPIView.as_view(), name='projects'),
+    path('about/', AboutAPIView.as_view(), name='about'),
+    path('partners/', PartnersAPIView.as_view(), name='partners'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
