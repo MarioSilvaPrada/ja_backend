@@ -8,11 +8,17 @@ from django.core.validators import RegexValidator
 
 
 def settings_image(instance, filename):
-    print('inst', instance)
     ext = filename.split('.')[-1]
     filename = f'{uuid.uuid4()}.{ext}'
 
     return os.path.join('images/site_settings/', filename)
+
+
+def project_image(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('images/projects/', filename)
 
 
 class Settings(models.Model):
@@ -37,10 +43,26 @@ class Settings(models.Model):
 class Project(models.Model):
 
     name = models.CharField(max_length=255)
-    description = models.TextField()
+    main_image = models.ImageField(null=True, upload_to=project_image)
 
     def __str__(self):
         return self.name
+
+
+class ProjectSection(models.Model):
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+    )
+    description = models.TextField()
+
+
+class Image(models.Model):
+    description = models.ForeignKey(
+        ProjectSection,
+        on_delete=models.CASCADE,
+    )
+    image = models.ImageField(upload_to=project_image)
 
 
 class About(models.Model):
@@ -50,13 +72,14 @@ class About(models.Model):
     description = models.TextField(verbose_name='Descrição do negócio')
     services = models.CharField(max_length=255, verbose_name='Serviços')
 
+
 class Partners(models.Model):
     class Meta:
         verbose_name_plural = "Parceiros"
-    
-    name = models.CharField(max_length=155, verbose_name='Nome da empresa')
-    url = models.URLField(max_length=155, verbose_name='Site da empresa', blank=True)
 
+    name = models.CharField(max_length=155, verbose_name='Nome da empresa')
+    url = models.URLField(
+        max_length=155, verbose_name='Site da empresa', blank=True)
 
 
 def _delete_file(path):

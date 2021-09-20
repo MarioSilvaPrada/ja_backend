@@ -5,6 +5,8 @@ class ProjectsAdmin(admin.ModelAdmin):
     list_display = ['name']
 
 admin.site.register(models.Project, ProjectsAdmin)
+admin.site.register(models.ProjectSection)
+admin.site.register(models.Image)
 admin.site.register(models.Partners)
 admin.site.register(models.About)
 admin.site.register(models.Settings)
