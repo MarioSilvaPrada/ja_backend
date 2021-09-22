@@ -1,11 +1,30 @@
 from django.contrib import admin
 from core import models
 
+
+class SectionInline(admin.StackedInline):
+    model = models.ProjectSection
+    ordering = ()
+    extra = 0
+
+
+class ImagesInline(admin.StackedInline):
+    model = models.Image
+    ordering = ()
+    extra = 0
+
+
 class ProjectsAdmin(admin.ModelAdmin):
     list_display = ['name']
+    inlines = [SectionInline]
+
+
+class ProjectsSectionAdmin(admin.ModelAdmin):
+    inlines = [ImagesInline]
+
 
 admin.site.register(models.Project, ProjectsAdmin)
-admin.site.register(models.ProjectSection)
+admin.site.register(models.ProjectSection, ProjectsSectionAdmin)
 admin.site.register(models.Image)
 admin.site.register(models.Partners)
 admin.site.register(models.About)
