@@ -52,17 +52,27 @@ class Project(models.Model):
 class ProjectSection(models.Model):
     project = models.ForeignKey(
         Project,
+        related_name='section',
         on_delete=models.CASCADE,
     )
+    section_name = models.CharField(max_length=150)
     description = models.TextField()
+
+    def __str__(self):
+        return f'{self.project.name} {self.section_name}'
 
 
 class Image(models.Model):
-    description = models.ForeignKey(
+    section = models.ForeignKey(
         ProjectSection,
+        related_name='image',
         on_delete=models.CASCADE,
     )
     image = models.ImageField(upload_to=project_image)
+    image_name = models.CharField(blank=True, max_length=150)
+
+    def __str__(self):
+        return self.image.url
 
 
 class About(models.Model):
@@ -92,3 +102,9 @@ def _delete_file(path):
 def delete_img_pre_delete_post(sender, instance, *args, **kwargs):
     if instance.main_background_image:
         _delete_file(instance.main_background_image.path)
+
+    if instance.main_image:
+        _delete_file(instance.main_image.path)
+
+    if instance.image:
+        _delete_file(instance.image.path)

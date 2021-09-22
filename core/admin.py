@@ -8,19 +8,22 @@ class SectionInline(admin.StackedInline):
     extra = 0
 
 
+class ProjectsAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    inlines = [SectionInline]
+
+
 class ImagesInline(admin.StackedInline):
     model = models.Image
     ordering = ()
     extra = 0
 
 
-class ProjectsAdmin(admin.ModelAdmin):
-    list_display = ['name']
-    inlines = [SectionInline]
-
-
 class ProjectsSectionAdmin(admin.ModelAdmin):
     inlines = [ImagesInline]
+
+    def get_ordering(self, request):
+        return ['section_name']
 
 
 admin.site.register(models.Project, ProjectsAdmin)
