@@ -72,7 +72,7 @@ class Image(models.Model):
     image_name = models.CharField(blank=True, max_length=150)
 
     def __str__(self):
-        return self.image.url
+        return self.image_name or f'imagem - {self.section}'
 
 
 class About(models.Model):

@@ -11,7 +11,8 @@ class ProjectImageSerializer(serializers.ModelSerializer):
 
 
 class ProjectSectionSerializer(serializers.ModelSerializer):
-    image = serializers.StringRelatedField(many=True)
+    # image = serializers.StringRelatedField(many=True)
+    image = ProjectImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = ProjectSection
@@ -19,7 +20,7 @@ class ProjectSectionSerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    
+
     section = ProjectSectionSerializer(many=True, read_only=True)
 
     class Meta:
