@@ -91,20 +91,3 @@ class Partners(models.Model):
     url = models.URLField(
         max_length=155, verbose_name='Site da empresa', blank=True)
 
-
-def _delete_file(path):
-    # Deletes file from filesystem.
-    if os.path.isfile(path):
-        os.remove(path)
-
-
-@receiver(pre_delete, sender=Settings)
-def delete_img_pre_delete_post(sender, instance, *args, **kwargs):
-    if instance.main_background_image:
-        _delete_file(instance.main_background_image.path)
-
-    if instance.main_image:
-        _delete_file(instance.main_image.path)
-
-    if instance.image:
-        _delete_file(instance.image.path)
