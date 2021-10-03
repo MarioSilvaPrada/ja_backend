@@ -1,7 +1,7 @@
 from django.db import models
 import uuid
 import os
-from django.db.models.signals import pre_delete
+from django.db.models.signals import post_delete
 from django.dispatch.dispatcher import receiver
 
 from django.core.validators import RegexValidator
@@ -48,6 +48,10 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+@receiver(post_delete, sender=Project)
+def delete_image_file(sender, instance, **kwargs):                          
+    instance.main_image.delete(False)
+
 
 class ProjectSection(models.Model):
     project = models.ForeignKey(
@@ -74,6 +78,10 @@ class Image(models.Model):
     def __str__(self):
         return self.image_name or f'imagem - {self.section}'
 
+@receiver(post_delete, sender=Image)
+def delete_image_file(sender, instance, **kwargs):                          
+    instance.image.delete(False)
+
 
 class About(models.Model):
     class Meta:
@@ -90,17 +98,3 @@ class Partners(models.Model):
     name = models.CharField(max_length=155, verbose_name='Nome da empresa')
     url = models.URLField(
         max_length=155, verbose_name='Site da empresa', blank=True)
-
-
-
-def delete_from_s3(bucket, model, aws_secret, aws_key):
-    try:
-        s3 = boto3.client(
-            "s3", aws_access_key_id=aws_key, aws_secret_access_key=aws_secret
-        )
-        s3.delete_object(Bucket=bucket, Key=model)
-        return True
-    except Exception as ex:
-        print(str(ex))
-        return False
-
