@@ -23,9 +23,19 @@ class ProjectsSectionAdmin(admin.ModelAdmin):
     inlines = [ImagesInline]
     ordering = ('project', 'section_name')
 
+
+class ImagesAdmin(admin.ModelAdmin):
+
+    actions = ['delete_selected']
+
+    def delete_queryset(self, request, queryset):
+        for obj in queryset:
+            print('iamgem', obj)
+
+
 admin.site.register(models.Project, ProjectsAdmin)
 admin.site.register(models.ProjectSection, ProjectsSectionAdmin)
-admin.site.register(models.Image)
+admin.site.register(models.Image, ImagesAdmin)
 admin.site.register(models.Partners)
 admin.site.register(models.About)
 admin.site.register(models.Settings)
