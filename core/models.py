@@ -38,9 +38,10 @@ class Settings(models.Model):
 
     def __str__(self):
         return 'My Settings'
-    
+
+
 @receiver(post_delete, sender=Settings)
-def delete_image_file(sender, instance, **kwargs):                          
+def delete_settings_image_file(sender, instance, **kwargs):
     instance.main_background_image.delete(False)
 
 
@@ -52,8 +53,9 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+
 @receiver(post_delete, sender=Project)
-def delete_image_file(sender, instance, **kwargs):                          
+def delete_project_image_file(sender, instance, **kwargs):
     instance.main_image.delete(False)
 
 
@@ -82,8 +84,9 @@ class Image(models.Model):
     def __str__(self):
         return self.image_name or f'imagem - {self.section}'
 
+
 @receiver(post_delete, sender=Image)
-def delete_image_file(sender, instance, **kwargs):                          
+def delete_image_file(sender, instance, **kwargs):
     instance.image.delete(False)
 
 
