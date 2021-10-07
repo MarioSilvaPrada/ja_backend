@@ -38,6 +38,10 @@ class Settings(models.Model):
 
     def __str__(self):
         return 'My Settings'
+    
+@receiver(post_delete, sender=Settings)
+def delete_image_file(sender, instance, **kwargs):                          
+    instance.main_background_image.delete(False)
 
 
 class Project(models.Model):
