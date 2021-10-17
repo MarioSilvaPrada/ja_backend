@@ -95,7 +95,9 @@ class About(models.Model):
         verbose_name_plural = "Sobre"
 
     description = models.TextField(verbose_name='Descrição do negócio')
-    services = models.CharField(max_length=255, verbose_name='Serviços')
+
+    def __str__(self):
+        return 'Serviços'
 
 
 class Partners(models.Model):
@@ -105,3 +107,6 @@ class Partners(models.Model):
     name = models.CharField(max_length=155, verbose_name='Nome da empresa')
     url = models.URLField(
         max_length=155, verbose_name='Site da empresa', blank=True)
+
+    def __str__(self):
+        return self.name
