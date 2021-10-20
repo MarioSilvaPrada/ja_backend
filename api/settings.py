@@ -17,8 +17,6 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 
-print('aquiii', env("DEBUG"))
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -35,7 +33,7 @@ DEBUG = int(env("DEBUG", default=0))
 
 ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS").split(" ")
 
-CORS_ORIGIN_WHITELIST = ('http://localhost:9000',)
+CORS_ORIGIN_WHITELIST = env("CORS").split(" ")
 
 # Application definition
 
