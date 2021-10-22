@@ -45,10 +45,41 @@ def delete_settings_image_file(sender, instance, **kwargs):
     instance.main_background_image.delete(False)
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+
 class Project(models.Model):
+    TIPOLOGY_CHOICES = (
+        ("T0", "T0"),
+        ("T1", "T1"),
+        ("T1+1", "T1+1"),
+        ("T2", "T2"),
+        ("T2+1", "T2+1"),
+        ("T3", "T3"),
+        ("T3+1", "T3+1"),
+        ("T4", "T4"),
+        ("T4+1", "T4+1"),
+        ("T5", "T5"),
+        ("T5+1", "T5+1"),
+
+    )
 
     name = models.CharField(max_length=255)
-    main_image = models.ImageField(null=True, upload_to=project_image)
+    main_image = models.ImageField(upload_to=project_image)
+    architects = models.CharField(
+        max_length=255, verbose_name='Arquitectos', default="João Afonso")
+    area = models.DecimalField(max_digits=6, decimal_places=2, default=10)
+    tipology = models.CharField(
+        max_length=5, choices=TIPOLOGY_CHOICES, default="T0")
+    photgraphs = models.CharField(
+        max_length=255, verbose_name='Fotógrafos', default="João Afonso")
+    engineering = models.CharField(
+        max_length=255, verbose_name='Engenheiros', default="João Afonso")
+    tags = models.ManyToManyField(Tag, related_name="projects")
 
     def __str__(self):
         return self.name

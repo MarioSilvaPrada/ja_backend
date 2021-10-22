@@ -25,9 +25,9 @@ from partners.views import PartnersAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/settings/', SettingsAPIView.as_view(), name='settings'),
-    path('api/projects/', ProjectAPIView.as_view(), name='projects'),
-    path('api/projects/<int:pk>/', SingleProjectAPIView.as_view(), name='single project'),
-    path('api/about/', AboutAPIView.as_view(), name='about'),
-    path('api/partners/', PartnersAPIView.as_view(), name='partners'),
+    path('settings/', SettingsAPIView.as_view(), name='settings'),
+    path('projects/', ProjectAPIView.as_view(), name='projects'),
+    path('projects/<int:pk>/', SingleProjectAPIView.as_view(), name='single project'),
+    path('about/', AboutAPIView.as_view(), name='about'),
+    path('partners/', PartnersAPIView.as_view(), name='partners'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
