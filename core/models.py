@@ -38,7 +38,7 @@ class Settings(models.Model):
     description = models.TextField(verbose_name='Descrição do negócio')
 
     def __str__(self):
-        return 'My Settings'
+        return 'Informações da empresa'
 
 
 @receiver(post_delete, sender=Settings)

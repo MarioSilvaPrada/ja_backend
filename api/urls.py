@@ -21,6 +21,7 @@ from django.conf import settings
 from settings.views import SettingsAPIView
 from projects.views import ProjectAPIView, SingleProjectAPIView
 from partners.views import PartnersAPIView
+from tags.views import TagAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +29,5 @@ urlpatterns = [
     path('projects/', ProjectAPIView.as_view(), name='projects'),
     path('projects/<int:pk>/', SingleProjectAPIView.as_view(), name='single project'),
     path('partners/', PartnersAPIView.as_view(), name='partners'),
+    path('tag/', TagAPIView.as_view(), name='tag'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
