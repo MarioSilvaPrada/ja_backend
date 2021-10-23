@@ -23,7 +23,7 @@ def project_image(instance, filename):
 
 class Settings(models.Model):
     class Meta:
-        verbose_name_plural = "Definições"
+        verbose_name_plural = "Informações"
 
     phone_regex = RegexValidator(
         regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in a valid format.")
@@ -35,6 +35,7 @@ class Settings(models.Model):
         validators=[phone_regex], max_length=17, blank=True, null=True)
     admin_address = models.CharField(
         max_length=255, unique=True, blank=True, null=True)
+    description = models.TextField(verbose_name='Descrição do negócio')
 
     def __str__(self):
         return 'My Settings'
@@ -71,14 +72,14 @@ class Project(models.Model):
     name = models.CharField(max_length=255)
     main_image = models.ImageField(upload_to=project_image)
     architects = models.CharField(
-        max_length=255, verbose_name='Arquitectos', default="João Afonso")
+        max_length=255, verbose_name='Arquitectos')
     area = models.DecimalField(max_digits=6, decimal_places=2, default=10)
     tipology = models.CharField(
         max_length=5, choices=TIPOLOGY_CHOICES, default="T0")
     photgraphs = models.CharField(
-        max_length=255, verbose_name='Fotógrafos', default="João Afonso")
+        max_length=255, verbose_name='Fotógrafos')
     engineering = models.CharField(
-        max_length=255, verbose_name='Engenheiros', default="João Afonso")
+        max_length=255, verbose_name='Engenheiros')
     tags = models.ManyToManyField(Tag, related_name="projects")
 
     def __str__(self):
@@ -119,16 +120,6 @@ class Image(models.Model):
 @receiver(post_delete, sender=Image)
 def delete_image_file(sender, instance, **kwargs):
     instance.image.delete(False)
-
-
-class About(models.Model):
-    class Meta:
-        verbose_name_plural = "Sobre"
-
-    description = models.TextField(verbose_name='Descrição do negócio')
-
-    def __str__(self):
-        return 'Serviços'
 
 
 class Partners(models.Model):
