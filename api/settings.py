@@ -11,10 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
-import environ
 
-env = environ.Env()
-environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,15 +21,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
+print('aquii', os.environ.get('SECRET_KEY'))
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(env("DEBUG", default=0))
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
-CORS_ORIGIN_WHITELIST = env("CORS").split(" ")
+CORS_ORIGIN_WHITELIST = os.environ.get("CORS").split(" ")
 
 # Application definition
 
@@ -89,12 +88,12 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 DATABASES = {
     'default': {
-        "ENGINE": env("SQL_ENGINE", default="django.db.backends.sqlite3"),
-        "NAME": env("SQL_DATABASE"),
-        "USER": env("SQL_USER", default="user"),
-        "PASSWORD": env("SQL_PASSWORD", default="password"),
-        "HOST": env("SQL_HOST", default="localhost"),
-        "PORT": env("SQL_PORT", default="5432"),
+        "ENGINE": os.environ.get("SQL_ENGINE", default="django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE"),
+        "USER": os.environ.get("SQL_USER", default="user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", default="password"),
+        "HOST": os.environ.get("SQL_HOST", default="localhost"),
+        "PORT": os.environ.get("SQL_PORT", default="5432"),
     }
 }
 
@@ -133,9 +132,9 @@ USE_TZ = True
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_REGION_NAME = 'eu-west-2'
 AWS_S3_SIGNATURE_VERSION = 's3v4'
 
