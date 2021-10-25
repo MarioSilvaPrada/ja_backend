@@ -4,3 +4,5 @@
 .env.prod.db
 
 __pycache__/
+
+static/

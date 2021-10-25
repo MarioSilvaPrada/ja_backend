@@ -80,7 +80,7 @@ class Project(models.Model):
         max_length=255, verbose_name='Fotógrafos')
     engineering = models.CharField(
         max_length=255, verbose_name='Engenheiros')
-    tags = models.ManyToManyField(Tag, related_name="projects")
+    tags = models.ManyToManyField(Tag, related_name="projects", blank=True)
 
     def __str__(self):
         return self.name
