@@ -28,13 +28,14 @@ class Settings(models.Model):
     phone_regex = RegexValidator(
         regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in a valid format.")
 
-    main_background_image = models.ImageField(upload_to=settings_image)
-    admin_name = models.CharField(max_length=50, unique=True, null=True)
-    admin_email = models.EmailField(max_length=255, unique=True, null=True)
+    about_me_image = models.ImageField(
+        upload_to=settings_image, verbose_name='Imagem "sobre mim"', null=True)
+    admin_name = models.CharField(max_length=50, null=True)
+    admin_email = models.EmailField(max_length=255, null=True)
     admin_phone_number = models.CharField(
         validators=[phone_regex], max_length=17, blank=True, null=True)
     admin_address = models.CharField(
-        max_length=255, unique=True, blank=True, null=True)
+        max_length=255, blank=True, null=True)
     description = models.TextField(verbose_name='Descrição do negócio')
 
     def __str__(self):
@@ -43,7 +44,7 @@ class Settings(models.Model):
 
 @receiver(post_delete, sender=Settings)
 def delete_settings_image_file(sender, instance, **kwargs):
-    instance.main_background_image.delete(False)
+    instance.about_me_image.delete(False)
 
 
 class Tag(models.Model):
@@ -74,13 +75,26 @@ class Project(models.Model):
     architects = models.CharField(
         max_length=255, verbose_name='Arquitectos')
     area = models.DecimalField(max_digits=6, decimal_places=2, default=10)
+    year = models.CharField(
+        max_length=20, verbose_name='Ano de construção', null=True)
+    construction = models.CharField(
+        max_length=255, verbose_name='Construção', null=True)
+    state = models.CharField(
+        max_length=255, verbose_name='Estado', null=True)
+    program = models.CharField(
+        max_length=255, verbose_name='Programa', null=True)
+    client = models.CharField(
+        max_length=255, verbose_name='Cliente', null=True)
+    location = models.CharField(
+        max_length=255, verbose_name='Localização', null=True)
     tipology = models.CharField(
         max_length=5, choices=TIPOLOGY_CHOICES, default="T0")
-    photgraphs = models.CharField(
+    photographs = models.CharField(
         max_length=255, verbose_name='Fotógrafos')
     engineering = models.CharField(
         max_length=255, verbose_name='Engenheiros')
     tags = models.ManyToManyField(Tag, related_name="projects", blank=True)
+    highlighted = models.BooleanField(default=False, verbose_name='Destacar')
 
     def __str__(self):
         return self.name
