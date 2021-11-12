@@ -55,44 +55,34 @@ class Tag(models.Model):
 
 
 class Project(models.Model):
-    TIPOLOGY_CHOICES = (
-        ("T0", "T0"),
-        ("T1", "T1"),
-        ("T1+1", "T1+1"),
-        ("T2", "T2"),
-        ("T2+1", "T2+1"),
-        ("T3", "T3"),
-        ("T3+1", "T3+1"),
-        ("T4", "T4"),
-        ("T4+1", "T4+1"),
-        ("T5", "T5"),
-        ("T5+1", "T5+1"),
-
-    )
 
     name = models.CharField(max_length=255)
     main_image = models.ImageField(upload_to=project_image)
+    hover_image = models.ImageField(
+        upload_to=project_image, null=True, blank=True)
     architects = models.CharField(
-        max_length=255, verbose_name='Arquitectos')
-    area = models.DecimalField(max_digits=6, decimal_places=2, default=10)
+        max_length=255, verbose_name='Arquitectos', blank=True)
+    area = models.DecimalField(
+        max_digits=6, decimal_places=2, default=10, blank=True)
     year = models.CharField(
-        max_length=20, verbose_name='Ano de construção', null=True)
+        max_length=20, verbose_name='Ano de construção', null=True, blank=True)
     construction = models.CharField(
-        max_length=255, verbose_name='Construção', null=True)
+        max_length=255, verbose_name='Construção', null=True, blank=True)
     state = models.CharField(
-        max_length=255, verbose_name='Estado', null=True)
+        max_length=255, verbose_name='Estado', null=True, blank=True)
     program = models.CharField(
-        max_length=255, verbose_name='Programa', null=True)
+        max_length=255, verbose_name='Programa', null=True, blank=True)
     client = models.CharField(
-        max_length=255, verbose_name='Cliente', null=True)
+        max_length=255, verbose_name='Cliente', null=True, blank=True)
     location = models.CharField(
-        max_length=255, verbose_name='Localização', null=True)
-    tipology = models.CharField(
-        max_length=5, choices=TIPOLOGY_CHOICES, default="T0")
+        max_length=255, verbose_name='Localização', null=True, blank=True)
+    tipology = models.CharField(max_length=5, default="T0", blank=True)
     photographs = models.CharField(
-        max_length=255, verbose_name='Fotógrafos')
+        max_length=255, verbose_name='Fotógrafos', blank=True)
     engineering = models.CharField(
-        max_length=255, verbose_name='Engenheiros')
+        max_length=255, verbose_name='Engenheiros', blank=True)
+    images = models.CharField(
+        max_length=255, verbose_name='Imagens', blank=True, null=True)
     tags = models.ManyToManyField(Tag, related_name="projects", blank=True)
     highlighted = models.BooleanField(default=False, verbose_name='Destacar')
 
@@ -103,6 +93,7 @@ class Project(models.Model):
 @receiver(post_delete, sender=Project)
 def delete_project_image_file(sender, instance, **kwargs):
     instance.main_image.delete(False)
+    instance.hover_image.delete(False)
 
 
 class ProjectSection(models.Model):
