@@ -56,6 +56,7 @@ class Tag(models.Model):
 
 class Project(models.Model):
 
+    position = models.CharField(max_length=10, null=True, blank=True)
     name = models.CharField(max_length=255)
     main_image = models.ImageField(upload_to=project_image)
     hover_image = models.ImageField(

@@ -9,7 +9,7 @@ class SectionInline(admin.StackedInline):
 
 
 class ProjectsAdmin(admin.ModelAdmin):
-    list_display = ['name']
+    list_display = ['name', 'position', 'highlighted']
     inlines = [SectionInline]
 
 
