@@ -37,6 +37,8 @@ class Settings(models.Model):
     admin_address = models.CharField(
         max_length=255, blank=True, null=True)
     description = models.TextField(verbose_name='Descrição do negócio')
+    description_en = models.TextField(
+        verbose_name='Descrição do negócio - English', null=True)
 
     def __str__(self):
         return 'Informações da empresa'
@@ -48,7 +50,9 @@ def delete_settings_image_file(sender, instance, **kwargs):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, verbose_name='Nome')
+    name_en = models.CharField(
+        max_length=20, null=True, verbose_name='Nome - English')
 
     def __str__(self):
         return self.name
@@ -58,6 +62,7 @@ class Project(models.Model):
 
     position = models.CharField(max_length=10, null=True, blank=True)
     name = models.CharField(max_length=255)
+    name_en = models.CharField(max_length=255, null=True)
     main_image = models.ImageField(upload_to=project_image)
     hover_image = models.ImageField(
         upload_to=project_image, null=True, blank=True)
@@ -105,6 +110,8 @@ class ProjectSection(models.Model):
     )
     section_name = models.CharField(max_length=150)
     description = models.TextField()
+    description_en = models.TextField(
+        null=True, verbose_name='Descrição - English')
 
     def __str__(self):
         return f'{self.project.name} {self.section_name}'

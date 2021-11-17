@@ -16,7 +16,7 @@ class ProjectSectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProjectSection
-        fields = ['id', 'project', 'section_name', 'description', 'image']
+        fields = '__all__'
 
 
 class ProjectSerializer(serializers.ModelSerializer):
