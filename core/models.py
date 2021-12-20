@@ -39,6 +39,8 @@ class Settings(models.Model):
     description = models.TextField(verbose_name='Descrição do negócio')
     description_en = models.TextField(
         verbose_name='Descrição do negócio - English', null=True)
+    company_file = models.FileField(
+        upload_to=settings_image, null=True, blank=True)
 
     def __str__(self):
         return 'Informações da empresa'
@@ -47,6 +49,7 @@ class Settings(models.Model):
 @receiver(post_delete, sender=Settings)
 def delete_settings_image_file(sender, instance, **kwargs):
     instance.about_me_image.delete(False)
+    instance.company_file.delete(False)
 
 
 class Tag(models.Model):
@@ -59,7 +62,6 @@ class Tag(models.Model):
 
 
 class Project(models.Model):
-
     position = models.CharField(max_length=10, null=True, blank=True)
     name = models.CharField(max_length=255)
     name_en = models.CharField(max_length=255, null=True)
