@@ -93,6 +93,7 @@ class Project(models.Model):
         max_length=255, verbose_name='Imagens', blank=True, null=True)
     tags = models.ManyToManyField(Tag, related_name="projects", blank=True)
     highlighted = models.BooleanField(default=False, verbose_name='Destacar')
+    is_active = models.BooleanField(default=True, verbose_name='está ativo')
 
     def __str__(self):
         return self.name
